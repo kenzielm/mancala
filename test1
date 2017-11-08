@@ -1,0 +1,136 @@
+    Plyer 2:  4,  4,  4,  4,  4,  4
+ 0                               0
+Player 1:  4,  4,  4,  4,  4,  4
+Game state: READY     Next turn: Player1
+
+Player 1 turn (pits 1-6): 3
+Player 2:  4,  4,  4,  4,  4,  4
+ 0                               1
+Player 1:  4,  4,  0,  5,  5,  5
+Game state: MOVEAGAIN     Next turn: Player1
+
+Player 1 turn (pits 1-6): 2
+Player 2:  4,  4,  4,  4,  4,  4
+ 0                               1
+Player 1:  4,  0,  1,  6,  6,  6
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 3
+Player 2:  5,  5,  5,  0,  4,  4
+ 1                               1
+Player 1:  4,  0,  1,  6,  6,  6
+Game state: MOVEAGAIN     Next turn: Player2
+
+Player 2 turn (pits 1-6): 4
+Player 2:  6,  6,  0,  0,  4,  4
+ 2                               1
+Player 1:  5,  1,  1,  6,  6,  6
+Game state: MOVECOMPLETE     Next turn: Player1
+
+Player 1 turn (pits 1-6): 4
+Player 2:  6,  6,  0,  1,  5,  5
+ 2                               2
+Player 1:  5,  1,  1,  0,  7,  7
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 3
+Player 2:  6,  6,  0,  0,  5,  5
+ 4                               2
+Player 1:  5,  1,  0,  0,  7,  7
+Game state: MOVECOMPLETE     Next turn: Player1
+
+Player 1 turn (pits 1-6): 1
+Player 2:  6,  6,  0,  0,  5,  5
+ 4                               2
+Player 1:  0,  2,  1,  1,  8,  8
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 6
+Player 2:  0,  6,  0,  0,  5,  5
+ 5                               2
+Player 1:  1,  3,  2,  2,  9,  8
+Game state: MOVECOMPLETE     Next turn: Player1
+
+Player 1 turn (pits 1-6): 5
+Player 2:  0,  7,  1,  1,  6,  7
+ 5                               5
+Player 1:  0,  3,  2,  2,  0,  9
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 1
+Player 2:  1,  8,  2,  2,  7,  0
+ 6                               5
+Player 1:  1,  3,  2,  2,  0,  9
+Game state: MOVECOMPLETE     Next turn: Player1
+
+Player 1 turn (pits 1-6): 3
+Player 2:  1,  8,  2,  2,  0,  0
+ 6                              13
+Player 1:  1,  3,  0,  3,  0,  9
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 3
+Player 2:  1,  9,  3,  0,  0,  0
+ 6                              13
+Player 1:  1,  3,  0,  3,  0,  9
+Game state: MOVECOMPLETE     Next turn: Player1
+
+Player 1 turn (pits 1-6): 2
+Player 2:  1,  9,  3,  0,  0,  0
+ 6                              14
+Player 1:  1,  0,  1,  4,  0,  9
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 6
+Player 2:  0,  9,  3,  0,  0,  0
+ 7                              14
+Player 1:  1,  0,  1,  4,  0,  9
+Game state: MOVEAGAIN     Next turn: Player2
+
+Player 2 turn (pits 1-6): 4
+Player 2:  1, 10,  0,  0,  0,  0
+ 8                              14
+Player 1:  1,  0,  1,  4,  0,  9
+Game state: MOVEAGAIN     Next turn: Player2
+
+Player 2 turn (pits 1-6): 6
+Player 2:  0, 10,  0,  0,  0,  0
+ 9                              14
+Player 1:  1,  0,  1,  4,  0,  9
+Game state: MOVEAGAIN     Next turn: Player2
+
+Player 2 turn (pits 1-6): 5
+Player 2:  1,  0,  0,  0,  0,  0
+12                              14
+Player 1:  3,  1,  2,  5,  0, 10
+Game state: MOVECOMPLETE     Next turn: Player1
+
+Player 1 turn (pits 1-6): 3
+Player 2:  1,  0,  0,  0,  0,  0
+12                              15
+Player 1:  3,  1,  0,  6,  0, 10
+Game state: MOVECOMPLETE     Next turn: Player2
+
+Player 2 turn (pits 1-6): 6
+Player 2:  0,  0,  0,  0,  0,  0
+13                              15
+Player 1:  3,  1,  0,  6,  0, 10
+Game state: MOVEAGAIN     Next turn: Player2
+
+Player 2 turn (pits 1-6): 6
+Player 2:  0,  0,  0,  0,  0,  0
+13                              15
+Player 1:  3,  1,  0,  6,  0, 10
+Game state: PITEMPTY     Next turn: Player2
+
+Player 2 turn (pits 1-6): 1
+Player 2:  0,  0,  0,  0,  0,  0
+13                              15
+Player 1:  3,  1,  0,  6,  0, 10
+Game state: PITEMPTY     Next turn: Player2
+
+Player 2 turn (pits 1-6): Player 2:  0,  0,  0,  0,  0,  0
+13                              15
+Player 1:  3,  1,  0,  6,  0, 10
+Game state: PITEMPTY     Next turn: Player2ayer1Move(model, 2);
+
