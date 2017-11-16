@@ -199,4 +199,22 @@ int Player2Move(MancalaModel * this, int pit) {
 
 }
 
+//returns how many stones are in player 1's bank
+int Player1Score(MancalaModel * this) {
+    return this->Player1Bank;
+}
 
+//returns how many stones are in player 2's bank
+int Player2Score(MancalaModel * this) {
+    return this->Player2Bank;
+}
+
+//returns array of how many marbles are in each pit on player 1's side
+int * Player1Pits(MancalaModel * this) {
+    return this->Player1Pits;
+}
+
+//returns array of how many marbles are in each pit on player 2's side
+int * Player2Pits(MancalaModel * this) {
+    return this->Player2Pits;
+}
