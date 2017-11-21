@@ -8,15 +8,19 @@
 
 
 //the easiest level - just returns a random number for a bin that's not empty
-int easy(){
+int easy(int*pits){
     int r=random();
    //CHANGE!!!!!!!!!!!!!!
     //get a new random bucket if the first one selected is empty
-    while (Payer1Pits[r]==0){
+    while (pits[r]==0){
 	r=random();
     }
     return r;
 }
 
 
+int medium(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
+}
 
+int hard(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
+}
