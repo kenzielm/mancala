@@ -34,8 +34,8 @@ int main(/*int argc, char *argv[]*/) {
     size_t size = BUFSIZ;
     MancalaModel * model = ModelCreate(printModel);
     while (model->GameState != GAMEOVER) {
-	if (model->turn == PLAYER1) {
 	    printf("Player %d turn (pits 1-6): ", model->turn + 1);
+	if (model->turn == PLAYER1) {
 	    getline(&buf, &size, stdin);
 	    long move = strtol(buf, &temp, 10);
 	    if (move < 1 || move > 6) {
@@ -44,7 +44,9 @@ int main(/*int argc, char *argv[]*/) {
 		Player1Move(model, move - 1);
 	    }
 	} else {
-	    Player2Move(model, easy(model->Player1Pits));
+	    int e = easy(model->Player2Pits);
+	    printf("%d\n", e+1);
+	    Player2Move(model, e);
 	}
     }
 
