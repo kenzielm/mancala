@@ -100,7 +100,7 @@ int Player1Move(MancalaModel * this, int pit) {
 	//if the last stone was dropped in an empty pit on the player's side,
 	//take that stone and all the stones in the opposite pit (on the other player's side)
 	//and put them in the player's bank
-	if (bank == PLAYER1 && this->Player1Pits[pit] == 1) {
+	if ((bank == PLAYER1) && (this->Player1Pits[pit] == 1) && (this->Player2Pits[5-pit] >= 1)) {
 	    this->Player1Pits[pit] = 0;
 	    this->Player1Bank++;
 	    int steal = 5 - pit;
@@ -180,7 +180,7 @@ int Player2Move(MancalaModel * this, int pit) {
 	//if the last stone was dropped in an empty pit on the player's side,
 	//take that stone and all the stones in the opposite pit (on the other player's side)
 	//and put them in the player's bank
-	if (bank == PLAYER2 && this->Player2Pits[pit] == 1) {
+	if ((bank == PLAYER2) && (this->Player2Pits[pit] == 1) && (this->Player1Pits[5-pit] >= 1)) {
 	    this->Player2Pits[pit] = 0;
 	    this->Player2Bank++;
 	    int steal = 5 - pit;
