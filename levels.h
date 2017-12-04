@@ -47,22 +47,23 @@ int medium(int* AIpits, int *PlayerPits){
 }
 
 //hardest (for now) level
-int hard(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
+int hard(int* AIpits, int *PlayerPits, int AIscore){
     //get info - are we losing, can we steal any of theirs, can they take any of ours, can we land in home
     int out=losing(AIscore, AIpits);
     int offense=theivery(PlayerPits, AIpits);
-    int defense=defense(PlayerPits, AIpits);
+    int defensive=defense(PlayerPits, AIpits);
+    int steal;
 
     //if we can steal from them, find out how much
     if (offense!=-1){
-	int steal =PlayerPits[5-((offense+AIpits[offense])%13)];
+	steal =PlayerPits[5-((offense+AIpits[offense])%13)];
     }
 
     //if we're almost out & about to lose then strategy revolves around stallinguntil we have more marbels
     if (out==1){
 	//we can't afford to lose a whole pit, so play defense if needed
-	if (defense!=-1){
-	    return defense;
+	if (defensive!=-1){
+	    return defensive;
 	}
 	//otherwise, we can play offense if we don't lose too many marbels or if we would steal enough for it to be worth it
 	else if (offense!=-1){
@@ -77,6 +78,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
 		    return i;
 		}
 	    }
+	}
     }
     int again=home(AIpits);
     
@@ -85,15 +87,15 @@ int hard(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
     //1 if we can steal more from them than they can from us (or if it's equal, cause then we'll just hope they don't notice they can steal from us)
     //-1 if neither are possible
     int compare;
-    if (defense!=-1 && offense!=-1){
-	if (AIpits[defense]>steal){
+    if (defensive!=-1 && offense!=-1){
+	if (AIpits[defensive]>steal){
 	    compare=0;
 	}
 	else {
 	    compare=1;
 	}
     }
-    else if (defense!=-1){
+    else if (defensive!=-1){
 	compare=0;
     }
     else if(offense!=-1){
@@ -110,7 +112,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
 	    return again;
 	}
 	else {
-	    return defense;
+	    return defensive;
 	}
     }
 
@@ -128,14 +130,24 @@ int hard(int* AIpits, int *PlayerPits, int AIscore, int PlayerScore){
 		    possiblePits[i]=AIpits[i];
 		}
 		possiblePits[again]=0;
-		int possibleOffense=thievery(PlayerPits, possiblePits);
-		if (possibleOffense!=-1 && PlayerPits[5-((AIPits[possibleOffense]+possibleOffense)%13)]){
+		int possibleOffense=theivery(PlayerPits, possiblePits);
+		if (possibleOffense!=-1 && PlayerPits[5-((AIpits[possibleOffense]+possibleOffense)%13)]){
 		   return again;
 		}
 	    }
 	}
     }
-    
-    else {
+    //if neither of those are an option, go ahead and land in home to go again, if you can
+    if (again!=-1){
+	return again;
     }
+
+    //otherwise, try to move something that will be useful next time around
+    int future=thinkAhead(PlayerPits, AIpits);
+    if (future!=-1){
+	return future;
+    }
+
+    //otherwise, just make a random move
+    return easy(AIpits);
 }
