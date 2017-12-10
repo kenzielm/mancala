@@ -9,10 +9,17 @@ typedef struct obj2d obj2d_t;
 
 struct obj2d {
 	int x, y;
-	int diam;
 	int r, g, b;
 };
 
-obj2d * create(int x, int y, int diam, int r, int g, int b);
+obj2d * create(int x, int y, int r, int g, int b) {
+	obj2d obj;
+	obj->x = x;
+	obj->y = y;
+	obj->r = r;
+	obj->g = g;
+	obj->b = b;
+	return obj;
+}
 
 #endif
