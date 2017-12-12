@@ -12,14 +12,14 @@ struct obj2d {
 	int r, g, b;
 };
 
-obj2d * create(int x, int y, int r, int g, int b) {
-	obj2d obj;
-	obj->x = x;
-	obj->y = y;
-	obj->r = r;
-	obj->g = g;
-	obj->b = b;
-	return obj;
+struct obj2d * create(int x, int y, int r, int g, int b) {
+	struct obj2d obj;
+	obj.x = x;
+	obj.y = y;
+	obj.r = r;
+    obj.g = g;
+    obj.b = b;
+	return &obj;
 }
 
 #endif
