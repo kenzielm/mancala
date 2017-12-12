@@ -102,7 +102,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
 	compare=1;
     }
     else{
-	compare=0;
+	compare=-1;
     }
 
     //if they can steal more from you than you can from them, play defensively and move what they would otherwise steal
