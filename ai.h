@@ -68,11 +68,11 @@ int defense (int *theirs, int *mine){
     //&& across from any of yours that aren't
     for (int i=0; i<6;i++){
 	//if so, see if they can end in it
-	if (theirs[i]==0 && mine[5-i]>0 && mine[5-i]>mine[concern]){
+	if (theirs[i]==0 && mine[5-i]>0  && (concern==-1 || mine[5-i]>mine[concern])){
 	    //boolean for if they can end there or not
 	    int worry=0;
 	    for(int j=i+1; j<6; j++){
-		if (theirs[j]==(5-j)+7+(i+1)){
+	        if (theirs[j]==(5-j)+7+(i+1)){
 		    worry=1;
 		    break;
 		}
@@ -135,9 +135,9 @@ int thinkAhead(int *theirs, int *mine){
 	    //loop through to see if moving any others next turn could end in this bucket
 	    //account for the fact that there might be an additional marbel in the pits next turn
 	    for(int j=0; j<6; j++){
-		if((j+mine[j])%13==i || (j+1+mine[j])%13==i){
+		if((j+mine[j])%13==i || (mine[j]!=0 && (j+1+mine[j])%13==i)){
 		    move=i;
-		    steal=theirs[5-j];
+		    steal=theirs[5-i];
 		    break;
 		}
 	    }
