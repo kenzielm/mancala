@@ -79,7 +79,7 @@ int Player1Move(MancalaModel * this, int pit) {
 		    bank = PLAYER2;
 		    pit = -1;
 		} else {
-		    this->Player2Pits[0] += 1;
+		    this->Player1Pits[0] += 1;
 		    pit = 0;
 		    bank = PLAYER1;
 		} 
@@ -87,7 +87,7 @@ int Player1Move(MancalaModel * this, int pit) {
 	}
 
 	//checks to see if the game is over or if the current player can take another move
-	if (checkPits(this->Player1Pits, PITCOUNT) == 0) {
+	if ((checkPits(this->Player1Pits, PITCOUNT) == 0) || (checkPits(this->Player2Pits, PITCOUNT) == 0)) {
 	    this->GameState = GAMEOVER;
 	    notify(this);
 	    return GAMEOVER;
@@ -159,7 +159,7 @@ int Player2Move(MancalaModel * this, int pit) {
 		    bank = PLAYER1;
 		    pit = -1;
 		} else {
-		    this->Player1Pits[0] += 1;
+		    this->Player2Pits[0] += 1;
 		    pit = 0;
 		    bank = PLAYER2;
 		} 
@@ -167,7 +167,7 @@ int Player2Move(MancalaModel * this, int pit) {
 	}
 
 	//checks to see if the game is over or if the current player can take another move
-	if (checkPits(this->Player2Pits, PITCOUNT) == 0) {
+	if ((checkPits(this->Player2Pits, PITCOUNT) == 0) || (checkPits(this->Player1Pits, PITCOUNT) == 0)) {
 	    this->GameState = GAMEOVER;
 	    notify(this);
 	    return GAMEOVER;

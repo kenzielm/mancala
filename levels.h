@@ -61,6 +61,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
 
     //if we're almost out & about to lose then strategy revolves around stallinguntil we have more marbels
     if (out==1){
+	printf("thinks it's running out");
 	//we can't afford to lose a whole pit, so play defense if needed
 	if (defensive!=-1){
 	    return defensive;
@@ -86,6 +87,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
     //0 if they can steal more from us than from them
     //1 if we can steal more from them than they can from us (or if it's equal, cause then we'll just hope they don't notice they can steal from us)
     //-1 if neither are possible
+    printf("is comparing");
     int compare;
     if (defensive!=-1 && offense!=-1){
 	if (AIpits[defensive]>steal){
@@ -107,6 +109,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
 
     //if they can steal more from you than you can from them, play defensively and move what they would otherwise steal
     if (compare==0){
+	printf("thinks we should be defending");
 	//landing in home & going again can't interfere with this, so go ahead and do it if you can
 	if (again!=-1){
 	    return again;
@@ -118,6 +121,7 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
 
     //if we can steal more from them than they can from us, then play offensively, and steal their stuff
     if (compare==1){
+	printf("Thinks we should be stealing");
 	//if we can land in our home, make sure it won't interfere with our thievery before doing it
 	//or if it would make us even more successful thieves
 	if (again!=-1){
@@ -139,14 +143,18 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
     }
     //if neither of those are an option, go ahead and land in home to go again, if you can
     if (again!=-1){
+	printf("is trying to land at home");
 	return again;
     }
 
     //otherwise, try to move something that will be useful next time around
     int future=thinkAhead(PlayerPits, AIpits);
     if (future!=-1){
+	printf("is thinking ahead");
 	return future;
     }
+
+    printf("has no strategy");
 
     //otherwise, just make a random move
     return easy(AIpits);
