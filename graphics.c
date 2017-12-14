@@ -39,6 +39,9 @@ float * houses[] = {house00, house01, house02, house03, house04, house05, NULL, 
  Enter a store value of 1 if piece is sent to a store (in which case, put row as 0, and column as 0 or 1)
  For houses, do not exceed row 1 or column 5.
  There is no error handling for indexes so make sure the program handles this well.
+
+ winMessage() and loseMessage(): 
+ Order the program to show a win message or lose message. Text can be changed within this program by editing the message string below.
  */
 
 void sendTo(struct obj2d piece, int rowcol, int store) {
@@ -61,12 +64,32 @@ void sendTo(struct obj2d piece, int rowcol, int store) {
     piece.y = y;
 }
 
+void winMessage() { 
+	char message[] = "You are winner!";
+	glColor3f(0,0.75,0);
+	output(-10, -10, message);
+}
+
+void loseMessage() { 
+	char message[] = "You lose!";
+	glColor3f(0.75,0,0);
+	output(-10, -10, message);	
+}
+
 /*
  END CALLABLE METHODS
  Below are OpenGL methods
  */
 void update() {
 
+}
+
+void output(int x, int y, char *message) { 
+	glRasterPos2f(x,y);
+	len = (int) strlen(message);
+	for (int i = 0; i < len; i++) { 
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+	}
 }
 
 void render() {
