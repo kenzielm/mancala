@@ -13,7 +13,7 @@ void ModelFree(MancalaModel * this);
 #define READY 0
 #define NOTYOURTURN 300
 #define PITEMPTY 400
-#define OUTOFBOUNDS 500
+#define OUTOFBOUNDS 500 //input <0 or >5
 
 int Player1Move(MancalaModel * this, int pit); //player 1 moves from pit 0-5, returns int indicating outcome
 int Player2Move(MancalaModel * this, int pit); //player 2 moves from pit 0-5, returns int indicating outcome

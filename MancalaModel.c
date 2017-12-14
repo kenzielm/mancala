@@ -32,7 +32,7 @@ void ModelFree(MancalaModel * this) {
     }
 }
 
-//checks how many stones there are in the given array (player's side)
+//checks how many stones there are in the given array (current player's side)
 int checkPits(int * pits, int size) {
     int allpits = 0;
     for (int i = 0; i < size; i++) {
@@ -43,7 +43,7 @@ int checkPits(int * pits, int size) {
 
 //checks all possible game state conditions before making the player's move
 //returns the state of the game
-//MancalaModel and int which pit of stones the player wants to move
+//arguments are the MancalaModel and int which pit of stones the player wants to move
 int Player1Move(MancalaModel * this, int pit) {
 
     if (this->turn != PLAYER1) {
@@ -64,19 +64,28 @@ int Player1Move(MancalaModel * this, int pit) {
 	this->Player1Pits[pit] = 0;
 	int bank = PLAYER1;
 
-	//drops one stone in each consecutive pit or bank (except the opposite player's bank) until stones run out
+	//drops one stone in each consecutive pit or bank in a counter clockwise direction
+	//(except the opposite player's bank) until stones run out
 	for (int i = 0; i < stones; i++) {
+	    //if the current pit is 0-4
 	    if (pit <= 4) {
+		//if the current pit is on the player's side
 		if (bank == PLAYER1) {
+		    //increment the pit and drop the stone into the new pit
 		    this->Player1Pits[++pit] += 1;
 		} else {
+		    //if the current pit is on the other player's side
 		    this->Player2Pits[++pit] += 1;
 		}
 	    } else if (pit == 5) {
+		//if the current pit is 5, aka the last pit before the bank
 		//drops the stone in player 1's bank but not player 2's
 		if (bank == PLAYER1) {
 		    this->Player1Bank++;
+		    //changes the bank to indicate that we are  now on the other player's side
 		    bank = PLAYER2;
+		    //makes the current pit -1 so that on the next loop it will iterate
+		    //to 0 (the first pit on the other side)
 		    pit = -1;
 		} else {
 		    this->Player1Pits[0] += 1;
@@ -86,7 +95,8 @@ int Player1Move(MancalaModel * this, int pit) {
 	    }
 	}
 
-	//checks to see if the game is over or if the current player can take another move
+	//checks to see if the game is over (i.e. either array of pits is empty)
+	//or if the current player can take another move
 	if ((checkPits(this->Player1Pits, PITCOUNT) == 0) || (checkPits(this->Player2Pits, PITCOUNT) == 0)) {
 	    this->GameState = GAMEOVER;
 	    notify(this);
@@ -120,7 +130,7 @@ int Player1Move(MancalaModel * this, int pit) {
 
 }
 
-
+//functionally the same as Player2Move, just with all Player1's and Player2's switched
 //checks all possible game state conditions before making the player's move
 //returns the state of the game
 //MancalaModel and int which pit of stones the player wants to move
