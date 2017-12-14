@@ -77,5 +77,15 @@ int main(int argc, char *argv[]) {
 	}
     }
 
+    if (model->GameState == GAMEOVER) {
+	printf("GAMEOVER\n");
+	int winner;
+	if (model->Player1Bank > model->Player2Bank) {
+	    winner = PLAYER1;
+	} else if (model->Player2Bank > model->Player1Bank) {
+	    winner = PLAYER2;
+	}
+	printf("Winner: Player %d\n", winner + 1);
+    }
 
 }
