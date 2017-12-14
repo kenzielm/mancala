@@ -121,19 +121,14 @@ int hard(int* AIpits, int *PlayerPits, int AIscore){
 	//if we can land in our home, make sure it won't interfere with our thievery before doing it
 	//or if it would make us even more successful thieves
 	if (again!=-1){
-	    if (again>offense){
-		return again;
+	    int possiblePits[6];
+	    for (int i=0; i<6; i++){
+		possiblePits[i]=AIpits[i];
 	    }
-	    else if (PlayerPits[5-again]>steal){
-		int possiblePits[6];
-		for (int i=0; i<6; i++){
-		    possiblePits[i]=AIpits[i];
-		}
-		possiblePits[again]=0;
-		int possibleOffense=theivery(PlayerPits, possiblePits);
-		if (possibleOffense!=-1 && PlayerPits[5-((AIpits[possibleOffense]+possibleOffense)%13)]){
-		   return again;
-		}
+	    possiblePits[again]=0;
+	    int possibleOffense=theivery(PlayerPits, possiblePits);
+	    if (possibleOffense!=-1 && PlayerPits[5-((AIpits[possibleOffense]+possibleOffense)%13)]){
+		return again;
 	    }
 	}
 	return offense;
