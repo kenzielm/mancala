@@ -12,7 +12,7 @@
 
 #define WINDOW_SIZE 750
 #define NUM_PIECES 24
-obj2d_t *objlist[24];
+obj2d_t *objlist[NUM_PIECES];
 //float obj2d = objlist[24];
 
 float house00[] = {-0.65, -0.3};
@@ -30,29 +30,32 @@ float house15[] = {0.025, 0.3};
 float store0[] = {-0.85, -0.3};
 float store1[] = {0.7, -0.3};
 
+float * houses[] = {house00, house01, house02, house03, house04, house05, NULL, NULL, NULL, NULL, house10, house11, house12, house13, house14, house15};
+
 /*
  CALLABLE METHODS
- sendTo(obj2d piece, int row, int col, int store):
- Send a piece to the house at the row and column specified.
+ sendTo(obj2d piece, int rowcol, int store):
+ Send a piece to the house at the row and column specified (concatenate the row and column into 1 integer, for example row 1 column 2 is rowcol 12).
  Enter a store value of 1 if piece is sent to a store (in which case, put row as 0, and column as 0 or 1)
  For houses, do not exceed row 1 or column 5.
  There is no error handling for indexes so make sure the program handles this well.
  */
 
-void sendTo(struct obj2d piece, int row, int col, int store) {
+void sendTo(struct obj2d piece, int rowcol, int store) {
     float x, y;
     if (store == 1) {
-        if (col == 0) {
+        if (rowcol == 0) {
             x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
             y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
         }
-        else if (col == 1) {
+        else if (rowcol == 1) {
             x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
             y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
         }
     }
     else {
-        // TODO: find an elegant way to handle this
+        x = houses[rowcol][0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+	y = houses[rowcol][1] + ((float)rand()/(float)(RAND_MAX))*0.15f;
     }
     piece.x = x;
     piece.y = y;
@@ -63,7 +66,7 @@ void sendTo(struct obj2d piece, int row, int col, int store) {
  Below are OpenGL methods
  */
 void update() {
-    
+
 }
 
 void render() {
