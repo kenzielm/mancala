@@ -51,9 +51,14 @@ void sendTo(struct obj2d piece, int rowcol, int store) {
       x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
       y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
     }
-    else if (rowcol == 1) {
-      x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
-      y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
+    else if (rowcol==1){
+      x = store1[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+      y = store1[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
+    }
+    else{
+      x=0.4;
+      y=0.4;
+
     }
   }
   else {
@@ -63,43 +68,55 @@ void sendTo(struct obj2d piece, int rowcol, int store) {
   piece.x = x;
   piece.y = y;
 }
-/*
- void winMessage() {
- char message[] = "You are winner!";
- glColor3f(0,0.75,0);
- Toutput(-10, -10, message);
- }
- 
- void loseMessage() {
- char message[] = "You lose!";
- glColor3f(0.75,0,0);
- Toutput(-10, -10, message);
- }
-*/
+
+void output(float x, float y, char *message) {
+  glRasterPos2f(x,y);
+  int len = (int) strlen(message);
+  for (int i = 0; i < len; i++) {
+    glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+  }
+}
+void winMessage() {
+  char message[] = "You are winner!";
+  glColor3f(0,0.75,0);
+  output(-10, -10, message);
+}
+
+void loseMessage() {
+  char message[] = "You lose!";
+  glColor3f(0.75,0,0);
+  output(-10, -10, message);
+}
+
 
 /*
  END CALLABLE METHODS
  Below are OpenGL methods
 */
 void update() {
-    
+
 }
 
-/*void Toutput(int x, int y, char *message) {
- glRasterPos2f(x,y);
- int len = (int) strlen(message);
- for (int i = 0; i < len; i++) {
- glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
- }
- }*/
+
 void initializePieces() {
   for (int i = 0; i < NUM_PIECES; i++) {
     objlist[i]=malloc(sizeof(struct obj2d));
-    int r =20;
-    int g=100;
-    int b=30;
-    objlist[i] = create(0, 0, r, g, b);
+    float r =0.5f;
+    float g=0.5f;
+    float b=0.0f;
+    objlist[i] = create(0.0,0.0, r, g, b);
   }
+  // TODO: Use sendTo to send pieces to correct starting places
+  //sendTo(*objlist[0],1,0);
+}
+void freepieces(){
+  for(int i=0;i<NUM_PIECES;i++){
+    free(objlist[i]);
+  }
+
+}
+
+
 void render() {
   glClearColor(0.25,0.25,0.25,1);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -140,15 +157,16 @@ void render() {
       glVertex3f(-0.20f*i, -0.05f*i*j, 1);
       glEnd();
     }
-    
+
   }
-  glutSwapBuffers();
+  //glutSwapBuffers();
   // Drawing the pieces:
+  initializePieces();
   for (int i = 0; i < NUM_PIECES; i++) {
-    // objlist[i]=malloc(sizeof(struct obj2d));    
-    float x = objlist[i]->x;
-    float y = objlist[i]->y;
+    float x = objlist[i]->x+((float)rand()/(float)(RAND_MAX))*0.78f;//These move the pieces
+    float y = objlist[i]->y+((float)rand()/(float)(RAND_MAX))*0.35f;
     glColor3f(objlist[i]->r, objlist[i]->g, objlist[i]->b);
+    //sendTo(*objlist[i],1, 0);
     glBegin(GL_POLYGON);
     glVertex3f(x+0.05, y+0.05, 1);
     glVertex3f(x+0.05, y-0.05, 1);
@@ -156,44 +174,49 @@ void render() {
     glVertex3f(x-0.05, y+0.05, 1);
     glEnd();
   }
+  glutSwapBuffers();
   glFlush();
-  }
 }
+
 
 void display() {
   update();
   render();
 }
+
 void renderScene(void) {
-    
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
   glBegin(GL_TRIANGLES);
   glVertex3f(-0.5,-0.5,0.0);
   glVertex3f(0.5,0.0,0.0);
-  glVertex3f(0.0,0.5,0.0);
+  glVertex3f(0.0,0.4,0.0);
   glEnd();
-    
+
   glutSwapBuffers();
 }
 
+
 int main(int argc, char *argv[]) {
   // TODO: initialize openGL shit
-    
+
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
   glutInitWindowPosition(100,100);
   glutInitWindowSize(WINDOW_SIZE,WINDOW_SIZE/1.5);
   glutCreateWindow("Mancala");
-  glutDisplayFunc(display);
-    
+
+  glutDisplayFunc(render);
   glutMainLoop();
-    
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluOrtho2D(0,1,0,1);
-  glClearColor(0.25,0.25,0.25,1);
-    
+  freepieces();
+
+  return EXIT_SUCCESS;
+  /*glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0,1,0,1);
+    glClearColor(0.25,0.25,0.25,1);
+  */
 }
 
 /*
