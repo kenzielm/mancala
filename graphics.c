@@ -2,7 +2,7 @@
  11/8/17
  Commented out functions are things that I don't know if we need.
  I lowkey don't know how any of this works
- */
+*/
 
 #include "MancalaModel.h"
 #include "obj2d.h"
@@ -39,137 +39,162 @@ float * houses[] = {house00, house01, house02, house03, house04, house05, NULL, 
  Enter a store value of 1 if piece is sent to a store (in which case, put row as 0, and column as 0 or 1)
  For houses, do not exceed row 1 or column 5.
  There is no error handling for indexes so make sure the program handles this well.
-
- winMessage() and loseMessage(): 
+ 
+ winMessage() and loseMessage():
  Order the program to show a win message or lose message. Text can be changed within this program by editing the message string below.
- */
+*/
 
 void sendTo(struct obj2d piece, int rowcol, int store) {
-    float x, y;
-    if (store == 1) {
-        if (rowcol == 0) {
-            x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
-            y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
-        }
-        else if (rowcol == 1) {
-            x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
-            y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
-        }
+  float x, y;
+  if (store == 1) {
+    if (rowcol == 0) {
+      x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+      y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
     }
-    else {
-        x = houses[rowcol][0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
-	y = houses[rowcol][1] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+    else if (rowcol == 1) {
+      x = store0[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+      y = store0[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
     }
-    piece.x = x;
-    piece.y = y;
+  }
+  else {
+    x = houses[rowcol][0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+    y = houses[rowcol][1] + ((float)rand()/(float)(RAND_MAX))*0.15f;
+  }
+  piece.x = x;
+  piece.y = y;
 }
-
-void winMessage() { 
-	char message[] = "You are winner!";
-	glColor3f(0,0.75,0);
-	output(-10, -10, message);
-}
-
-void loseMessage() { 
-	char message[] = "You lose!";
-	glColor3f(0.75,0,0);
-	output(-10, -10, message);	
-}
+/*
+ void winMessage() {
+ char message[] = "You are winner!";
+ glColor3f(0,0.75,0);
+ Toutput(-10, -10, message);
+ }
+ 
+ void loseMessage() {
+ char message[] = "You lose!";
+ glColor3f(0.75,0,0);
+ Toutput(-10, -10, message);
+ }
+*/
 
 /*
  END CALLABLE METHODS
  Below are OpenGL methods
- */
+*/
 void update() {
-
+    
 }
 
-void output(int x, int y, char *message) { 
-	glRasterPos2f(x,y);
-	len = (int) strlen(message);
-	for (int i = 0; i < len; i++) { 
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
-	}
-}
+/*void Toutput(int x, int y, char *message) {
+ glRasterPos2f(x,y);
+ int len = (int) strlen(message);
+ for (int i = 0; i < len; i++) {
+ glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+ }
+ }*/
 
 void render() {
-    glClearColor(0.25,0.25,0.25,1);
-    glClear(GL_COLOR_BUFFER_BIT);
-    // Creating the board:
-    glColor3f(0.75f, 0.65f, 0.75f); // Board color
+  glClearColor(0.25,0.25,0.25,1);
+  glClear(GL_COLOR_BUFFER_BIT);
+  // Creating the board:
+  glColor3f(0.75f, 0.65f, 0.75f); // Board color
+  glBegin(GL_POLYGON);
+  glVertex3f(-0.9f, -0.35f, 1);
+  glVertex3f(0.9f, -0.35f, 1);
+  glVertex3f(0.9f, 0.35f, 1);
+  glVertex3f(-0.9f, 0.35f, 1);
+  glEnd();
+  // Creating the houses and stores:
+  glColor3f(0.5f, 0.5f, 0.5f); // House/store color
+  for (int i = -1; i < 2; i += 2) {
     glBegin(GL_POLYGON);
-    glVertex3f(-0.9f, -0.35f, 1);
-    glVertex3f(0.9f, -0.35f, 1);
-    glVertex3f(0.9f, 0.35f, 1);
-    glVertex3f(-0.9f, 0.35f, 1);
+    glVertex3f(-0.85f*i, -0.3f*i, 1);
+    glVertex3f(-0.7f*i, -0.3f*i, 1);
+    glVertex3f(-0.7f*i, 0.3f*i, 1);
+    glVertex3f(-0.85f*i, 0.3f*i, 1);
     glEnd();
-    // Creating the houses and stores:
-    glColor3f(0.5f, 0.5f, 0.5f); // House/store color
-    for (int i = -1; i < 2; i += 2) {
-        glBegin(GL_POLYGON);
-        glVertex3f(-0.85f*i, -0.3f*i, 1);
-        glVertex3f(-0.7f*i, -0.3f*i, 1);
-        glVertex3f(-0.7f*i, 0.3f*i, 1);
-        glVertex3f(-0.85f*i, 0.3f*i, 1);
-        glEnd();
-        for (int j = -1; j < 2; j += 2) {
-            glBegin(GL_POLYGON);
-            glVertex3f(-0.65f*i, -0.3f*i*j, 1);
-            glVertex3f(-0.475f*i, -0.3f*i*j, 1);
-            glVertex3f(-0.475f*i, -0.05f*i*j, 1);
-            glVertex3f(-0.65f*i, -0.05f*i*j, 1);
-            glEnd();
-            glBegin(GL_POLYGON);
-            glVertex3f(-0.425f*i, -0.3f*i*j, 1);
-            glVertex3f(-0.25f*i, -0.3f*i*j, 1);
-            glVertex3f(-0.25f*i, -0.05f*i*j, 1);
-            glVertex3f(-0.425f*i, -0.05f*i*j, 1);
-            glEnd();
-            glBegin(GL_POLYGON);
-            glVertex3f(-0.20f*i, -0.3f*i*j, 1);
-            glVertex3f(-0.025f*i, -0.3f*i*j, 1);
-            glVertex3f(-0.025f*i, -0.05f*i*j, 1);
-            glVertex3f(-0.20f*i, -0.05f*i*j, 1);
-            glEnd();
-        }
+    for (int j = -1; j < 2; j += 2) {
+      glBegin(GL_POLYGON);
+      glVertex3f(-0.65f*i, -0.3f*i*j, 1);
+      glVertex3f(-0.475f*i, -0.3f*i*j, 1);
+      glVertex3f(-0.475f*i, -0.05f*i*j, 1);
+      glVertex3f(-0.65f*i, -0.05f*i*j, 1);
+      glEnd();
+      glBegin(GL_POLYGON);
+      glVertex3f(-0.425f*i, -0.3f*i*j, 1);
+      glVertex3f(-0.25f*i, -0.3f*i*j, 1);
+      glVertex3f(-0.25f*i, -0.05f*i*j, 1);
+      glVertex3f(-0.425f*i, -0.05f*i*j, 1);
+      glEnd();
+      glBegin(GL_POLYGON);
+      glVertex3f(-0.20f*i, -0.3f*i*j, 1);
+      glVertex3f(-0.025f*i, -0.3f*i*j, 1);
+      glVertex3f(-0.025f*i, -0.05f*i*j, 1);
+      glVertex3f(-0.20f*i, -0.05f*i*j, 1);
+      glEnd();
     }
-    // Drawing the pieces:
-    for (int i = 0; i < NUM_PIECES; i++) {
-        float x = objlist[i]->x;
-        float y = objlist[i]->y;
-        glColor3f(objlist[i]->r, objlist[i]->g, objlist[i]->b);
-        glBegin(GL_POLYGON);
-        glVertex3f(x+0.05, y+0.05, 1);
-        glVertex3f(x+0.05, y-0.05, 1);
-        glVertex3f(x-0.05, y-0.05, 1);
-        glVertex3f(x-0.05, y+0.05, 1);
-        glEnd();
-    }
-    glFlush();
+    
+  }
+  glutSwapBuffers();
+  // Drawing the pieces:
+  for (int i = 0; i < NUM_PIECES; i++) {
+    float x = objlist[i]->x;
+    float y = objlist[i]->y;
+    glColor3f(objlist[i]->r, objlist[i]->g, objlist[i]->b);
+    glBegin(GL_POLYGON);
+    glVertex3f(x+0.05, y+0.05, 1);
+    glVertex3f(x+0.05, y-0.05, 1);
+    glVertex3f(x-0.05, y-0.05, 1);
+    glVertex3f(x-0.05, y+0.05, 1);
+    glEnd();
+  }
+  glFlush();
 }
 
 void display() {
-    update();
-    render();
+  update();
+  render();
+}
+void renderScene(void) {
+    
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+  glBegin(GL_TRIANGLES);
+  glVertex3f(-0.5,-0.5,0.0);
+  glVertex3f(0.5,0.0,0.0);
+  glVertex3f(0.0,0.5,0.0);
+  glEnd();
+    
+  glutSwapBuffers();
 }
 
 void initializePieces() {
-    for (int i = 0; i < NUM_PIECES; i++) {
-        int r = 0;
-        int g= 0;
-        int b=0;
-        objlist[i] = create(0, 0, r, g, b);
-    }
-    // TODO: Use sendTo to send pieces to correct starting places
+  for (int i = 0; i < NUM_PIECES; i++) {
+    int r = 0;
+    int g= 0;
+    int b=0;
+    objlist[i] = create(0, 0, r, g, b);
+  }
+  // TODO: Use sendTo to send pieces to correct starting places
 }
 
 int main(int argc, char *argv[]) {
-    // TODO: initialize openGL shit
+  // TODO: initialize openGL shit
     
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0,1,0,1);
-    glClearColor(0.25,0.25,0.25,1);
+  glutInit(&argc, argv);
+  glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+  glutInitWindowPosition(100,100);
+  glutInitWindowSize(WINDOW_SIZE,WINDOW_SIZE/1.5);
+  glutCreateWindow("Mancala");
+  glutDisplayFunc(display);
+    
+  glutMainLoop();
+    
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluOrtho2D(0,1,0,1);
+  glClearColor(0.25,0.25,0.25,1);
+    
 }
 
 /*
