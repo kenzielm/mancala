@@ -92,7 +92,14 @@ void update() {
  glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
  }
  }*/
-
+void initializePieces() {
+  for (int i = 0; i < NUM_PIECES; i++) {
+    objlist[i]=malloc(sizeof(struct obj2d));
+    int r =20;
+    int g=100;
+    int b=30;
+    objlist[i] = create(0, 0, r, g, b);
+  }
 void render() {
   glClearColor(0.25,0.25,0.25,1);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -138,7 +145,7 @@ void render() {
   glutSwapBuffers();
   // Drawing the pieces:
   for (int i = 0; i < NUM_PIECES; i++) {
-    objlist[i]=malloc(sizeof(struct obj2d));    
+    // objlist[i]=malloc(sizeof(struct obj2d));    
     float x = objlist[i]->x;
     float y = objlist[i]->y;
     glColor3f(objlist[i]->r, objlist[i]->g, objlist[i]->b);
@@ -150,8 +157,6 @@ void render() {
     glEnd();
   }
   glFlush();
-  for (int i=0;i<NUM_PIECES;i++){
-    free(objlist[i]);
   }
 }
 
@@ -170,16 +175,6 @@ void renderScene(void) {
   glEnd();
     
   glutSwapBuffers();
-}
-
-void initializePieces() {
-  for (int i = 0; i < NUM_PIECES; i++) {
-    int r = 0;
-    int g= 0;
-    int b=0;
-    objlist[i] = create(0, 0, r, g, b);
-  }
-  // TODO: Use sendTo to send pieces to correct starting places
 }
 
 int main(int argc, char *argv[]) {
