@@ -1,1 +1,12 @@
 # mancala
+
+MancalaModel.h - header file for the game board
+MancalaModel.c - functions for the game
+mancala.c - regular game, make and run
+ASCIImancala.c - main function for playing the ASCII graphics version
+runmancala.sh - file that should be used to play the ASCII graphics version
+
+
+AI level options 1, 2, or 3 can be used as arguments when starting the game 
+(i.e. ./mancala 3 or ./runmancala.sh 3 for hard AI). 
+If no level is specified, defaults to level 1.

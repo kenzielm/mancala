@@ -89,4 +89,8 @@ int main(int argc, char *argv[]) {
 	printf("Winner: Player %d\n", winner + 1);
     }
 
+    ModelFree(model);
+    free(temp);
+    free(buf);
+
 }
