@@ -30,7 +30,7 @@ float house15[] = {0.025, 0.3};
 float store0[] = {-0.85, -0.3};
 float store1[] = {0.7, -0.3};
 
-float * houses[] = {house00, house01, house02, house03, house04, house05, float a[] = {0}, float b[] = {0}, float c[] = {0}, float d[] = {0}, house10, house11, house12, house13, house14, house15};
+float * houses[] = {house00, house01, house02, house03, house04, house05,0,0,0,0, house10, house11, house12, house13, house14, house15};
 
 /*
  CALLABLE METHODS
@@ -39,7 +39,7 @@ float * houses[] = {house00, house01, house02, house03, house04, house05, float 
  Enter a store value of 1 if piece is sent to a store (in which case, put row as 0, and column as 0 or 1)
  For houses, do not exceed row 1 or column 5.
  There is no error handling for indexes so make sure the program handles this well.
-
+ 
  winMessage() and loseMessage():
  Order the program to show a win message or lose message. Text can be changed within this program by editing the message string below.
 */
@@ -55,11 +55,7 @@ void sendTo(struct obj2d piece, int rowcol, int store) {
       x = store1[0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
       y = store1[1] + ((float)rand()/(float)(RAND_MAX))*0.25f;
     }
-    else{
-      x=0.4;
-      y=0.4;
 
-    }
   }
   else {
     x = houses[rowcol][0] + ((float)rand()/(float)(RAND_MAX))*0.15f;
@@ -68,7 +64,7 @@ void sendTo(struct obj2d piece, int rowcol, int store) {
   piece.x = x;
   piece.y = y;
 }
-
+//The output function would be here to show whether or not the player wins.
 void output(float x, float y, char *message) {
   glRasterPos2f(x,y);
   int len = (int) strlen(message);
@@ -93,37 +89,44 @@ void loseMessage() {
  END CALLABLE METHODS
  Below are OpenGL methods
 */
-
 void update() {
+  /*here we would connect it up to the game
+     we would see what the gamestate was and update
+     the gameboard accordingly*/
 
 }
+
 
 void initializePieces() {
+  int j = 0;
+  float r =0.0f;
+  float g=0.0f;
+  float b=0.0f;
+
   for (int i = 0; i < NUM_PIECES; i++) {
     objlist[i]=malloc(sizeof(struct obj2d));
-    float r = 0.25f + ((float)rand()/(float)(RAND_MAX))*0.5f;;
-    float g = 0.25f + ((float)rand()/(float)(RAND_MAX))*0.5f;;
-    float b = 0.25f + ((float)rand()/(float)(RAND_MAX))*0.5f;;
-    objlist[i] = create(0.0, 0.0, r, g, b);
   }
-  int j = 0;
-  for (int i = 0; i < 6; i++) {
-	  for (int k = 0; k < NUM_PIECES/12; k++) {
-		  sendTo(objlist[j], k, 0);
-		  j++
-	  }
-	  for (int k = 10; k < 16; k++) {
-		  sendTo(objlist[j], k, 0);
-		  j++
-	  }
+  // TODO: Use sendTo to send pieces to correct starting places
+  while (j!=NUM_PIECES){
+    for (int i = 0; i < 4; i++) {
+      for (int k = 0; k < NUM_PIECES/4; k++) {
+	objlist[j]=create(houses[k][0],houses[k][1], r, g, b);
+      }
+      for (int k = 10; k < 16; k++) {
+	objlist[j]=create(houses[k][0],houses[k][1], r, g, b);
+      }
+      j++;
+
+    }
   }
 }
-
 void freepieces(){
   for(int i=0;i<NUM_PIECES;i++){
     free(objlist[i]);
   }
+
 }
+
 
 void render() {
   glClearColor(0.25,0.25,0.25,1);
@@ -171,10 +174,10 @@ void render() {
   // Drawing the pieces:
   initializePieces();
   for (int i = 0; i < NUM_PIECES; i++) {
-    float x = objlist[i]->x+((float)rand()/(float)(RAND_MAX))*0.78f;//These move the pieces
+    //initializePieces();
+    float x = objlist[i]->x+((float)rand()/(float)(RAND_MAX))*-0.85f;//These move the pieces
     float y = objlist[i]->y+((float)rand()/(float)(RAND_MAX))*0.35f;
     glColor3f(objlist[i]->r, objlist[i]->g, objlist[i]->b);
-    //sendTo(*objlist[i],1, 0);
     glBegin(GL_POLYGON);
     glVertex3f(x+0.05, y+0.05, 1);
     glVertex3f(x+0.05, y-0.05, 1);
@@ -193,6 +196,7 @@ void display() {
 }
 
 void renderScene(void) {
+  //this is here as a test
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -216,8 +220,8 @@ int main(int argc, char *argv[]) {
   glutCreateWindow("Mancala");
 
   glutDisplayFunc(render);
-  glutMainLoop();
   freepieces();
+  glutMainLoop();
 
   return EXIT_SUCCESS;
   /*glMatrixMode(GL_PROJECTION);
