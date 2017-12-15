@@ -30,6 +30,33 @@ void printModel(MancalaModel * this) {
     printf("Game state: %s     Next turn: %s\n\n", state, this->turn==0?"Player1":"Player2");
 }
 
+void printGame(MancalaModel * this) {
+
+    printf("Player 2: %2d, %2d, %2d, %2d, %2d, %2d\n", this->Player2Pits[5], this->Player2Pits[4], this->Player2Pits[3], this->Player2Pits[2], this->Player2Pits[1], this->Player2Pits[0]);
+    printf("%2d                              %2d\n", this->Player2Bank, this->Player1Bank);
+    printf("Player 1: %2d, %2d, %2d, %2d, %2d, %2d\n", this->Player1Pits[0], this->Player1Pits[1], this->Player1Pits[2], this->Player1Pits[3], this->Player1Pits[4], this->Player1Pits[5]);
+    char * state;
+    if (this->GameState == GAMEOVER) {
+	state = "GAMEOVER";
+    } else if (this->GameState == MOVECOMPLETE) {
+	state = "MOVECOMPLETE";
+    } else if (this->GameState == MOVEAGAIN) {
+	state = "MOVEAGAIN";
+    } else if (this->GameState == NOTYOURTURN) {
+	state = "NOTYOURTURN";
+    } else if (this->GameState == READY) {
+	state = "READY";
+    } else if (this->GameState == PITEMPTY) {
+	state = "PITEMPTY";
+    } else if (this->GameState == OUTOFBOUNDS) {
+	state = "OUTOFBOUNDS";
+    } else {
+	state = "UNKNOWN";
+    }
+    printf("Game state: %s     Next turn: %s\n\n", state, this->turn==0?"Player1":"Player2");
+
+}
+
 int aiMove(MancalaModel * this, int lvl) {
     if (lvl == 1) {
 	return easy(this->Player2Pits);
