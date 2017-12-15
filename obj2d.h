@@ -19,7 +19,7 @@ struct obj2d * create(int x, int y, int r, int g, int b) {
 	obj.r = r;
     obj.g = g;
     obj.b = b;
-	return obj;
+	return &obj;
 }
 
 #endif
