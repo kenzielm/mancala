@@ -30,7 +30,7 @@ float house15[] = {0.025, 0.3};
 float store0[] = {-0.85, -0.3};
 float store1[] = {0.7, -0.3};
 
-float * houses[] = {house00, house01, house02, house03, house04, house05, NULL, NULL, NULL, NULL, house10, house11, house12, house13, house14, house15};
+float * houses[] = {house00, house01, house02, house03, house04, house05, float a[] = {0}, float b[] = {0}, float c[] = {0}, float d[] = {0}, house10, house11, house12, house13, house14, house15};
 
 /*
  CALLABLE METHODS
@@ -39,7 +39,7 @@ float * houses[] = {house00, house01, house02, house03, house04, house05, NULL, 
  Enter a store value of 1 if piece is sent to a store (in which case, put row as 0, and column as 0 or 1)
  For houses, do not exceed row 1 or column 5.
  There is no error handling for indexes so make sure the program handles this well.
- 
+
  winMessage() and loseMessage():
  Order the program to show a win message or lose message. Text can be changed within this program by editing the message string below.
 */
@@ -93,29 +93,37 @@ void loseMessage() {
  END CALLABLE METHODS
  Below are OpenGL methods
 */
+
 void update() {
 
 }
 
-
 void initializePieces() {
   for (int i = 0; i < NUM_PIECES; i++) {
     objlist[i]=malloc(sizeof(struct obj2d));
-    float r =0.5f;
-    float g=0.5f;
-    float b=0.0f;
-    objlist[i] = create(0.0,0.0, r, g, b);
+    float r = 0.25f + ((float)rand()/(float)(RAND_MAX))*0.5f;;
+    float g = 0.25f + ((float)rand()/(float)(RAND_MAX))*0.5f;;
+    float b = 0.25f + ((float)rand()/(float)(RAND_MAX))*0.5f;;
+    objlist[i] = create(0.0, 0.0, r, g, b);
   }
-  // TODO: Use sendTo to send pieces to correct starting places
-  //sendTo(*objlist[0],1,0);
+  int j = 0;
+  for (int i = 0; i < 6; i++) {
+	  for (int k = 0; k < NUM_PIECES/12; k++) {
+		  sendTo(objlist[j], k, 0);
+		  j++
+	  }
+	  for (int k = 10; k < 16; k++) {
+		  sendTo(objlist[j], k, 0);
+		  j++
+	  }
+  }
 }
+
 void freepieces(){
   for(int i=0;i<NUM_PIECES;i++){
     free(objlist[i]);
   }
-
 }
-
 
 void render() {
   glClearColor(0.25,0.25,0.25,1);
