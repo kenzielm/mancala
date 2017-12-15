@@ -12,7 +12,7 @@
 
 #define WINDOW_SIZE 750
 #define NUM_PIECES 24
-obj2d_t *objlist[NUM_PIECES];
+struct obj2d *objlist[NUM_PIECES];
 //float obj2d = objlist[24];
 
 float house00[] = {-0.65, -0.3};
@@ -138,6 +138,7 @@ void render() {
   glutSwapBuffers();
   // Drawing the pieces:
   for (int i = 0; i < NUM_PIECES; i++) {
+    objlist[i]=malloc(sizeof(struct obj2d));    
     float x = objlist[i]->x;
     float y = objlist[i]->y;
     glColor3f(objlist[i]->r, objlist[i]->g, objlist[i]->b);
@@ -149,6 +150,9 @@ void render() {
     glEnd();
   }
   glFlush();
+  for (int i=0;i<NUM_PIECES;i++){
+    free(objlist[i]);
+  }
 }
 
 void display() {
